@@ -1,0 +1,470 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище user88_dbModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Final_Courses">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="MaxHours" Type="int" Nullable="false" />
+          <Property Name="DepartmentID" Type="int" Nullable="false" />
+          <Property Name="ProfessorID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Final_Departments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="HeadOfDepartment" Type="int" Nullable="false" />
+          <Property Name="PlaceOfDepartment" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Final_Professors">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Patronimyc" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="DepartmentID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Final_Schedule">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Professors" Type="int" />
+          <Property Name="ID_Courses" Type="int" />
+          <Property Name="NumClass" Type="int" />
+          <Property Name="NumRoom" Type="int" />
+          <Property Name="DateOfClass" Type="date" />
+          <Property Name="ClassLeft" Type="int" />
+        </EntityType>
+        <EntityType Name="Final_Students">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Patronimyc" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="EnrollmentDate" Type="date" Nullable="false" />
+          <Property Name="DepartmentID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Final_Courses_Final_Departments">
+          <End Role="Final_Departments" Type="Self.Final_Departments" Multiplicity="1" />
+          <End Role="Final_Courses" Type="Self.Final_Courses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Final_Departments">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Final_Courses">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Final_Courses_Final_Professors">
+          <End Role="Final_Professors" Type="Self.Final_Professors" Multiplicity="1" />
+          <End Role="Final_Courses" Type="Self.Final_Courses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Final_Professors">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Final_Courses">
+              <PropertyRef Name="ProfessorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Final_Departments_Final_Professors">
+          <End Role="Final_Professors" Type="Self.Final_Professors" Multiplicity="1" />
+          <End Role="Final_Departments" Type="Self.Final_Departments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Final_Professors">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Final_Departments">
+              <PropertyRef Name="HeadOfDepartment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Final_Professors_Final_Departments">
+          <End Role="Final_Departments" Type="Self.Final_Departments" Multiplicity="1" />
+          <End Role="Final_Professors" Type="Self.Final_Professors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Final_Departments">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Final_Professors">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Final_Schedule_Final_Courses">
+          <End Role="Final_Courses" Type="Self.Final_Courses" Multiplicity="0..1" />
+          <End Role="Final_Schedule" Type="Self.Final_Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Final_Courses">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Final_Schedule">
+              <PropertyRef Name="ID_Courses" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Final_Schedule_Final_Professors">
+          <End Role="Final_Professors" Type="Self.Final_Professors" Multiplicity="0..1" />
+          <End Role="Final_Schedule" Type="Self.Final_Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Final_Professors">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Final_Schedule">
+              <PropertyRef Name="ID_Professors" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Final_Students_Final_Departments">
+          <End Role="Final_Departments" Type="Self.Final_Departments" Multiplicity="1" />
+          <End Role="Final_Students" Type="Self.Final_Students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Final_Departments">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Final_Students">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище user88_dbModelContainer">
+          <EntitySet Name="Final_Courses" EntityType="Self.Final_Courses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Final_Departments" EntityType="Self.Final_Departments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Final_Professors" EntityType="Self.Final_Professors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Final_Schedule" EntityType="Self.Final_Schedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Final_Students" EntityType="Self.Final_Students" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Final_Courses_Final_Departments" Association="Self.FK_Final_Courses_Final_Departments">
+            <End Role="Final_Departments" EntitySet="Final_Departments" />
+            <End Role="Final_Courses" EntitySet="Final_Courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Final_Courses_Final_Professors" Association="Self.FK_Final_Courses_Final_Professors">
+            <End Role="Final_Professors" EntitySet="Final_Professors" />
+            <End Role="Final_Courses" EntitySet="Final_Courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Final_Departments_Final_Professors" Association="Self.FK_Final_Departments_Final_Professors">
+            <End Role="Final_Professors" EntitySet="Final_Professors" />
+            <End Role="Final_Departments" EntitySet="Final_Departments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Final_Professors_Final_Departments" Association="Self.FK_Final_Professors_Final_Departments">
+            <End Role="Final_Departments" EntitySet="Final_Departments" />
+            <End Role="Final_Professors" EntitySet="Final_Professors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Final_Schedule_Final_Courses" Association="Self.FK_Final_Schedule_Final_Courses">
+            <End Role="Final_Courses" EntitySet="Final_Courses" />
+            <End Role="Final_Schedule" EntitySet="Final_Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Final_Schedule_Final_Professors" Association="Self.FK_Final_Schedule_Final_Professors">
+            <End Role="Final_Professors" EntitySet="Final_Professors" />
+            <End Role="Final_Schedule" EntitySet="Final_Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Final_Students_Final_Departments" Association="Self.FK_Final_Students_Final_Departments">
+            <End Role="Final_Departments" EntitySet="Final_Departments" />
+            <End Role="Final_Students" EntitySet="Final_Students" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="user88_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Final_Courses">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MaxHours" Type="Int32" Nullable="false" />
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" />
+          <Property Name="ProfessorID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Final_Departments" Relationship="Self.FK_Final_Courses_Final_Departments" FromRole="Final_Courses" ToRole="Final_Departments" />
+          <NavigationProperty Name="Final_Professors" Relationship="Self.FK_Final_Courses_Final_Professors" FromRole="Final_Courses" ToRole="Final_Professors" />
+          <NavigationProperty Name="Final_Schedule" Relationship="Self.FK_Final_Schedule_Final_Courses" FromRole="Final_Courses" ToRole="Final_Schedule" />
+        </EntityType>
+        <EntityType Name="Final_Departments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HeadOfDepartment" Type="Int32" Nullable="false" />
+          <Property Name="PlaceOfDepartment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Final_Courses" Relationship="Self.FK_Final_Courses_Final_Departments" FromRole="Final_Departments" ToRole="Final_Courses" />
+          <NavigationProperty Name="Final_Professors" Relationship="Self.FK_Final_Departments_Final_Professors" FromRole="Final_Departments" ToRole="Final_Professors" />
+          <NavigationProperty Name="Final_Professors1" Relationship="Self.FK_Final_Professors_Final_Departments" FromRole="Final_Departments" ToRole="Final_Professors" />
+          <NavigationProperty Name="Final_Students" Relationship="Self.FK_Final_Students_Final_Departments" FromRole="Final_Departments" ToRole="Final_Students" />
+        </EntityType>
+        <EntityType Name="Final_Professors">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Patronimyc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Final_Courses" Relationship="Self.FK_Final_Courses_Final_Professors" FromRole="Final_Professors" ToRole="Final_Courses" />
+          <NavigationProperty Name="Final_Departments" Relationship="Self.FK_Final_Departments_Final_Professors" FromRole="Final_Professors" ToRole="Final_Departments" />
+          <NavigationProperty Name="Final_Departments1" Relationship="Self.FK_Final_Professors_Final_Departments" FromRole="Final_Professors" ToRole="Final_Departments" />
+          <NavigationProperty Name="Final_Schedule" Relationship="Self.FK_Final_Schedule_Final_Professors" FromRole="Final_Professors" ToRole="Final_Schedule" />
+        </EntityType>
+        <EntityType Name="Final_Schedule">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Professors" Type="Int32" />
+          <Property Name="ID_Courses" Type="Int32" />
+          <Property Name="NumClass" Type="Int32" />
+          <Property Name="NumRoom" Type="Int32" />
+          <Property Name="DateOfClass" Type="DateTime" Precision="0" />
+          <Property Name="ClassLeft" Type="Int32" />
+          <NavigationProperty Name="Final_Courses" Relationship="Self.FK_Final_Schedule_Final_Courses" FromRole="Final_Schedule" ToRole="Final_Courses" />
+          <NavigationProperty Name="Final_Professors" Relationship="Self.FK_Final_Schedule_Final_Professors" FromRole="Final_Schedule" ToRole="Final_Professors" />
+        </EntityType>
+        <EntityType Name="Final_Students">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Patronimyc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EnrollmentDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Final_Departments" Relationship="Self.FK_Final_Students_Final_Departments" FromRole="Final_Students" ToRole="Final_Departments" />
+        </EntityType>
+        <Association Name="FK_Final_Courses_Final_Departments">
+          <End Role="Final_Departments" Type="Self.Final_Departments" Multiplicity="1" />
+          <End Role="Final_Courses" Type="Self.Final_Courses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Final_Departments">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Final_Courses">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Final_Courses_Final_Professors">
+          <End Role="Final_Professors" Type="Self.Final_Professors" Multiplicity="1" />
+          <End Role="Final_Courses" Type="Self.Final_Courses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Final_Professors">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Final_Courses">
+              <PropertyRef Name="ProfessorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Final_Schedule_Final_Courses">
+          <End Role="Final_Courses" Type="Self.Final_Courses" Multiplicity="0..1" />
+          <End Role="Final_Schedule" Type="Self.Final_Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Final_Courses">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Final_Schedule">
+              <PropertyRef Name="ID_Courses" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Final_Departments_Final_Professors">
+          <End Role="Final_Professors" Type="Self.Final_Professors" Multiplicity="1" />
+          <End Role="Final_Departments" Type="Self.Final_Departments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Final_Professors">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Final_Departments">
+              <PropertyRef Name="HeadOfDepartment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Final_Professors_Final_Departments">
+          <End Role="Final_Departments" Type="Self.Final_Departments" Multiplicity="1" />
+          <End Role="Final_Professors" Type="Self.Final_Professors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Final_Departments">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Final_Professors">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Final_Students_Final_Departments">
+          <End Role="Final_Departments" Type="Self.Final_Departments" Multiplicity="1" />
+          <End Role="Final_Students" Type="Self.Final_Students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Final_Departments">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Final_Students">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Final_Schedule_Final_Professors">
+          <End Role="Final_Professors" Type="Self.Final_Professors" Multiplicity="0..1" />
+          <End Role="Final_Schedule" Type="Self.Final_Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Final_Professors">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Final_Schedule">
+              <PropertyRef Name="ID_Professors" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="user88_dbEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Final_Courses" EntityType="Self.Final_Courses" />
+          <EntitySet Name="Final_Departments" EntityType="Self.Final_Departments" />
+          <EntitySet Name="Final_Professors" EntityType="Self.Final_Professors" />
+          <EntitySet Name="Final_Schedule" EntityType="Self.Final_Schedule" />
+          <EntitySet Name="Final_Students" EntityType="Self.Final_Students" />
+          <AssociationSet Name="FK_Final_Courses_Final_Departments" Association="Self.FK_Final_Courses_Final_Departments">
+            <End Role="Final_Departments" EntitySet="Final_Departments" />
+            <End Role="Final_Courses" EntitySet="Final_Courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Final_Courses_Final_Professors" Association="Self.FK_Final_Courses_Final_Professors">
+            <End Role="Final_Professors" EntitySet="Final_Professors" />
+            <End Role="Final_Courses" EntitySet="Final_Courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Final_Schedule_Final_Courses" Association="Self.FK_Final_Schedule_Final_Courses">
+            <End Role="Final_Courses" EntitySet="Final_Courses" />
+            <End Role="Final_Schedule" EntitySet="Final_Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Final_Departments_Final_Professors" Association="Self.FK_Final_Departments_Final_Professors">
+            <End Role="Final_Professors" EntitySet="Final_Professors" />
+            <End Role="Final_Departments" EntitySet="Final_Departments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Final_Professors_Final_Departments" Association="Self.FK_Final_Professors_Final_Departments">
+            <End Role="Final_Departments" EntitySet="Final_Departments" />
+            <End Role="Final_Professors" EntitySet="Final_Professors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Final_Students_Final_Departments" Association="Self.FK_Final_Students_Final_Departments">
+            <End Role="Final_Departments" EntitySet="Final_Departments" />
+            <End Role="Final_Students" EntitySet="Final_Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Final_Schedule_Final_Professors" Association="Self.FK_Final_Schedule_Final_Professors">
+            <End Role="Final_Professors" EntitySet="Final_Professors" />
+            <End Role="Final_Schedule" EntitySet="Final_Schedule" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище user88_dbModelContainer" CdmEntityContainer="user88_dbEntities2">
+          <EntitySetMapping Name="Final_Courses">
+            <EntityTypeMapping TypeName="user88_dbModel.Final_Courses">
+              <MappingFragment StoreEntitySet="Final_Courses">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="MaxHours" ColumnName="MaxHours" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="ProfessorID" ColumnName="ProfessorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Final_Departments">
+            <EntityTypeMapping TypeName="user88_dbModel.Final_Departments">
+              <MappingFragment StoreEntitySet="Final_Departments">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="HeadOfDepartment" ColumnName="HeadOfDepartment" />
+                <ScalarProperty Name="PlaceOfDepartment" ColumnName="PlaceOfDepartment" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Final_Professors">
+            <EntityTypeMapping TypeName="user88_dbModel.Final_Professors">
+              <MappingFragment StoreEntitySet="Final_Professors">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Patronimyc" ColumnName="Patronimyc" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Final_Schedule">
+            <EntityTypeMapping TypeName="user88_dbModel.Final_Schedule">
+              <MappingFragment StoreEntitySet="Final_Schedule">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_Professors" ColumnName="ID_Professors" />
+                <ScalarProperty Name="ID_Courses" ColumnName="ID_Courses" />
+                <ScalarProperty Name="NumClass" ColumnName="NumClass" />
+                <ScalarProperty Name="NumRoom" ColumnName="NumRoom" />
+                <ScalarProperty Name="DateOfClass" ColumnName="DateOfClass" />
+                <ScalarProperty Name="ClassLeft" ColumnName="ClassLeft" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Final_Students">
+            <EntityTypeMapping TypeName="user88_dbModel.Final_Students">
+              <MappingFragment StoreEntitySet="Final_Students">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Patronimyc" ColumnName="Patronimyc" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EnrollmentDate" ColumnName="EnrollmentDate" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

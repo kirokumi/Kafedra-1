@@ -1,0 +1,49 @@
+﻿<Window x:Class="WpfApp1.ProfList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="ProfList" Height="490" Width="900">
+    <Grid Background="#FFFFE0" Height="450" VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="305"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock HorizontalAlignment="Center" Text="Преподаватели" VerticalAlignment="Center" FontSize="36"></TextBlock>
+        <DataGrid FontFamily="Comic Sans MS" AutoGenerateColumns="False" IsReadOnly="True" x:Name="dg_Prof" Grid.Row="1" Margin="10 0 10 0">
+            <DataGrid.Columns>
+                <DataGridTextColumn FontFamily="Comic Sans MS" Header="Фамилия" Binding="{Binding LastName}" Width="auto"/>
+                <DataGridTextColumn FontFamily="Comic Sans MS" Header="Имя" Binding="{Binding FirstName}" Width="auto"/>
+                <DataGridTextColumn FontFamily="Comic Sans MS" Header="Отчество" Binding="{Binding Patronimyc}" Width="auto"/>
+                <DataGridTextColumn FontFamily="Comic Sans MS" Header="Почта" Binding="{Binding Email}" Width="auto"/>
+                <DataGridTextColumn FontFamily="Comic Sans MS" Header="Телефон" Binding="{Binding Phone}" Width="auto"/>
+                <DataGridTextColumn FontFamily="Comic Sans MS" Header="Пароль" Binding="{Binding Password}" Width="auto"/>
+                <DataGridTextColumn FontFamily="Comic Sans MS" Header="Отделение" Binding="{Binding Final_Departments1.DepartmentName}" Width="auto"/>
+                <DataGridTemplateColumn Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button FontFamily="Comic Sans MS" x:Name="But_Edit" Content="Редактирование" Click="But_Edit_Click"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button FontFamily="Comic Sans MS" x:Name="But_Delete" Content="Удаление" Click="But_Delete_Click"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
+            <Button FontFamily="Comic Sans MS" Background="AntiqueWhite" x:Name="But_Add" Click="But_Add_Click" Grid.Row="2" Margin="15 5 5 5" Content="Добавить" Width="200" FontSize="24" HorizontalAlignment="Left"></Button>
+            <TextBlock FontFamily="Comic Sans MS" Text="Поиск:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" Margin="0,0,5,0"></TextBlock>
+            <TextBox FontFamily="Comic Sans MS" x:Name="SearchTextBox" Width="250" Margin="0,0,10,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TextChanged="SearchTextBox_TextChanged"/>
+            <Button FontFamily="Comic Sans MS" Background="AntiqueWhite" x:Name="But_Return" Grid.Row="2" Margin="15,5,15,5" Content="Назад" Width="200" FontSize="24" HorizontalAlignment="Right" Click="But_Return_Click"></Button>
+        </StackPanel>
+    </Grid>
+</Window>
+

@@ -1,0 +1,53 @@
+﻿<Window x:Class="WpfApp1.ScheduleList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="ScheduleList"  Height="490" Width="800">
+    <Window.Resources>
+        <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+    <Grid Background="#FFFFE0" Height="450" VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="305"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock FontFamily="Comic Sans MS" HorizontalAlignment="Center" Text="Расписание" VerticalAlignment="Center" FontSize="36"></TextBlock>
+        <DataGrid AutoGenerateColumns="False" IsReadOnly="True" x:Name="dg_Schedule" Grid.Row="1" Margin="10 0 10 0">
+            <DataGrid.Columns>
+                <DataGridTextColumn FontFamily="Comic Sans MS" Header="Преподаватель" Binding="{Binding Final_Professors.LastName}" Width="auto"/>
+                <DataGridTextColumn FontFamily="Comic Sans MS" Header="Предмет" Binding="{Binding Final_Courses.CourseName}" Width="auto"/>
+                <DataGridTextColumn FontFamily="Comic Sans MS" Header="№ пары" Binding="{Binding NumClass}" Width="auto"/>
+                <DataGridTextColumn FontFamily="Comic Sans MS" Header="№ аудитории" Binding="{Binding NumRoom}" Width="auto"/>
+                <DataGridTextColumn FontFamily="Comic Sans MS" Header="День" Binding="{Binding DateOfClass, StringFormat='{}{0:dd.MM.yyyy}'}" Width="auto"/>
+                <DataGridTextColumn FontFamily="Comic Sans MS" Header="Осталось пар" Binding="{Binding ClassLeft}" Width="auto"/>
+                <DataGridTemplateColumn Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button FontFamily="Comic Sans MS" x:Name="But_Edit" Content="Редактирование" Click="But_Edit_Click" 
+                    Visibility="{Binding IsDateValid, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button FontFamily="Comic Sans MS" x:Name="But_Delete" Content="Удаление" Click="But_Delete_Click" 
+                    Visibility="{Binding IsDateValid, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
+            <Button FontFamily="Comic Sans MS" Background="AntiqueWhite" x:Name="But_Add" Click="But_Add_Click" Grid.Row="2" Margin="15 5 5 5" Content="Добавить" Width="200" FontSize="24" HorizontalAlignment="Left"></Button>
+            <TextBlock FontFamily="Comic Sans MS" Text="Поиск:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" Margin="0,0,5,0"></TextBlock>
+            <TextBox FontFamily="Comic Sans MS" x:Name="SearchTextBox" Width="250" Margin="0,0,10,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TextChanged="SearchTextBox_TextChanged"/>
+            <Button FontFamily="Comic Sans MS" Background="AntiqueWhite" x:Name="But_Return" Grid.Row="2" Margin="15,5,15,5" Content="Назад" Width="200" FontSize="24" HorizontalAlignment="Right" Click="But_Return_Click"></Button>
+        </StackPanel>
+    </Grid>
+</Window>
+
